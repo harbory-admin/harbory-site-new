@@ -2,6 +2,12 @@
 import * as React from "react";
 import { useEffect } from "react";
 
+type Industry = {
+  name: string;     // title
+  blurb: string;    // short description
+  details?: string[]; // optional array of bullets
+};
+
 
 type Service = { title: string; tag: string; description: string; bullets: string[] };
 type Industry = {
@@ -27,15 +33,98 @@ const Logo = ({ className = "", size = "xl" }: { className?: string; size?: Logo
 };
 
 const services: Service[] = [
-  { title: "Data Platform & Pipelines", tag: "Build", description: "Reliable ingestion, models, and governance—foundations your business can trust.", bullets: ["Ingestion & ELT (Snowflake, dbt, Azure, GCP)", "Star/Snowflake modeling & semantic layers", "Performance, cost, and data quality checks"] },
-  { title: "Embedded & Internal Apps", tag: "Operate", description: "Decision tools inside the systems your teams already use.", bullets: ["Embedded portals for sales, retail, ecommerce", "Role-based access & multi-tenant UX", "Data apps for workflows and approvals"] },
-  { title: "Analytics for Decisions", tag: "Inform", description: "Dashboards, metrics, and alerts that drive action—not just views.", bullets: ["Executive KPI suites & financial reporting", "Self-serve analytics enablement", "Usage tracking & adoption playbooks"] },
-  { title: "AI & Intelligent Automation", tag: "Scale", description: "Copilots and automations that remove busywork and speed up operations.", bullets: ["LLM copilots for internal teams", "RPA for reporting & data QA", "Closed-loop actions via webhooks/APIs"] },
-  { title: "Advanced Analytics / Modeling", tag: "Predict", description: "Forecasting, propensity, and anomaly detection that inform decisions ahead of time.", bullets: ["Forecasting & demand planning", "Propensity & churn models", "Real-time signals & anomaly detection"] },
-  { title: "Governance & Strategy", tag: "Align", description: "Shared definitions, cadences, security, and a roadmap that sticks.", bullets: ["KPI frameworks & metric definitions", "Security, RLS, audits & SOPs", "Program governance & roadmapping"] },
-  { title: "Consumer Research", tag: "Understand", description: "Market & consumer research to validate products, markets, and messaging.", bullets: ["Questionnaire development & survey design", "Qual/quant studies & panel management", "Insights reporting & CX instrumentation"] },
-  { title: "Fractional Leadership", tag: "Lead", description: "Hands-on execution with seasoned analytics/product leadership.", bullets: ["Interim Head of Data/BI", "Project rescue & vendor management", "Team enablement & hiring support"] },
+  {
+    title: "Data Platform & Pipelines",
+    tag: "Build",
+    description: "Reliable ingestion, models, and governance—foundations your business can trust.",
+    bullets: [
+      "Ingestion & ELT (Snowflake, dbt, Azure, GCP)",
+      "Star/Snowflake modeling & semantic layers",
+      "Performance, cost, and data quality checks",
+    ],
+  },
+  {
+    title: "Embedded & Internal Apps",
+    tag: "Operate",
+    description: "Decision tools inside the systems your teams already use.",
+    bullets: [
+      "Embedded portals for sales, retail, ecommerce",
+      "Role-based access & multi-tenant UX",
+      "Data apps for workflows and approvals",
+    ],
+  },
+  {
+    title: "Analytics for Decisions",
+    tag: "Inform",
+    description: "Dashboards, metrics, and alerts that drive action—not just views.",
+    bullets: [
+      "Executive KPI suites & financial reporting",
+      "Self-serve analytics enablement",
+      "Usage tracking & adoption playbooks",
+    ],
+  },
+  {
+    title: "AI & Intelligent Automation",
+    tag: "Scale",
+    description: "Copilots and automations that remove busywork and speed up operations.",
+    bullets: [
+      "LLM copilots for internal teams",
+      "RPA for reporting & data QA",
+      "Closed-loop actions via webhooks/APIs",
+    ],
+  },
+  {
+    title: "Advanced Analytics / Modeling",
+    tag: "Predict",
+    description: "Forecasting, propensity, and anomaly detection that inform decisions ahead of time.",
+    bullets: [
+      "Forecasting & demand planning",
+      "Propensity & churn models",
+      "Real-time signals & anomaly detection",
+    ],
+  },
+  {
+    title: "Geo Mapping & Spatial Analytics",
+    tag: "Map",
+    description: "ArcGIS, drone scanning, and geospatial analytics to capture, visualize, and act on location-based insights.",
+    bullets: [
+      "Drone-based aerial scans & 3D terrain mapping",
+      "ArcGIS integrations & custom spatial dashboards",
+      "Geo data pipelines for planning, retail & operations",
+    ],
+  },
+  {
+    title: "Governance & Strategy",
+    tag: "Align",
+    description: "Shared definitions, cadences, security, and a roadmap that sticks.",
+    bullets: [
+      "KPI frameworks & metric definitions",
+      "Security, RLS, audits & SOPs",
+      "Program governance & roadmapping",
+    ],
+  },
+  {
+    title: "Fractional Leadership",
+    tag: "Lead",
+    description: "Hands-on execution with seasoned analytics/product leadership.",
+    bullets: [
+      "Interim Head of Data/BI",
+      "Project rescue & vendor management",
+      "Team enablement & hiring support",
+    ],
+  },
+  {
+    title: "Consumer Research",
+    tag: "Understand",
+    description: "Market & consumer research to validate products, markets, and messaging.",
+    bullets: [
+      "Questionnaire development & survey design",
+      "Qual/quant studies & panel management",
+      "Insights reporting & CX instrumentation",
+    ],
+  },
 ];
+
 
 const industries: Industry[] = [
   {
@@ -207,10 +296,10 @@ export default function Page() {
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             <div>
               <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-brand-navy">
-              Data. Apps. Automation.
+              Data. Apps. Intelligence. Automation.
               <span className="block underline decoration-brand-coral underline-offset-8 decoration-4">
-              Done right
-              </span>.
+              Done right.
+              </span>
               </h1>
 
               <p className="mt-4 text-lg text-slate-700">
@@ -287,22 +376,39 @@ export default function Page() {
         </div>
       </section>
 
-{/* Industries */}
-<section id="industries" className="py-12 md:py-16">
-  <div className="mx-auto max-w-7xl px-6 lg:px-8">
-    {/* Header band (matches What we build) */}
-    <div className="max-w-3xl">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-brand-blue">
-        Industries
-      </p>
-      <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-brand-navy">
-        Where we’ve delivered
-      </h2>
-      <p className="mt-3 text-slate-600 leading-relaxed">
-        We’ve built platforms, apps, analytics, and automation across these spaces.
-        Different shapes by industry—same goal: faster decisions and measurable impact.
-      </p>
+{/* Industries grid — inline details, no modal */}
+<div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+  {industries.map((i) => (
+    <div
+      key={i.name}
+      className="text-left rounded-2xl border border-brand-navy/15 bg-white p-5 shadow-card"
+    >
+      <div className="font-semibold text-brand-navy">{i.name}</div>
+      <p className="mt-2 text-sm text-slate-600">{i.blurb}</p>
+
+      {i.details && i.details.length > 0 && (
+        <ul className="mt-4 space-y-2 text-sm text-slate-700">
+          {i.details.slice(0, 3).map((b) => (
+            <li key={b} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-navy" />
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="mt-4">
+        <a
+          href="#contact"
+          className="inline-flex items-center gap-1 text-sm font-medium text-brand-blue hover:underline"
+        >
+          Talk to us about this →
+        </a>
+      </div>
     </div>
+  ))}
+</div>
+
 
     {/* Tiles */}
     <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
