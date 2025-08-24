@@ -287,32 +287,50 @@ export default function Page() {
         </div>
       </section>
 
-{/* Industries grid — clickable tiles */}
-<div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-  {industries.map((i, idx) => (
-    <button
-      key={i.name}
-      type="button"
-      onClick={() => setOpenIdx(idx)}
-      className="text-left rounded-2xl border border-brand-navy/15 bg-white p-4 shadow-card transition
-                 hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-blue/40"
-      aria-haspopup="dialog"
-      aria-controls="industry-modal"
-    >
-      <div className="font-semibold text-brand-navy">{i.name}</div>
-      <div className="mt-1 text-sm text-slate-600">{i.blurb}</div>
-    </button>
-  ))}
-</div>
+{/* Industries */}
+<section id="industries" className="py-12 md:py-16">
+  <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    {/* Header band (matches What we build) */}
+    <div className="max-w-3xl">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-brand-blue">
+        Industries
+      </p>
+      <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-brand-navy">
+        Where we’ve delivered
+      </h2>
+      <p className="mt-3 text-slate-600 leading-relaxed">
+        We’ve built platforms, apps, analytics, and automation across these spaces.
+        Different shapes by industry—same goal: faster decisions and measurable impact.
+      </p>
+    </div>
 
-{/* Modal renderer — place right below the grid */}
-<Modal
-  open={openIdx !== null}
-  title={openIdx !== null ? industries[openIdx].name : ""}
-  blurb={openIdx !== null ? industries[openIdx].blurb : ""}
-  bullets={openIdx !== null ? industries[openIdx].details ?? [] : []}
-  onClose={() => setOpenIdx(null)}
-/>
+    {/* Tiles */}
+    <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {industries.map((i, idx) => (
+        <button
+          key={i.name}
+          type="button"
+          onClick={() => setOpenIdx(idx)}
+          className="text-left rounded-2xl border border-brand-navy/15 bg-white p-4 shadow-card transition
+                     hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-blue/40"
+        >
+          <div className="font-semibold text-brand-navy">{i.name}</div>
+          <div className="mt-1 text-sm text-slate-600">{i.blurb}</div>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {/* Modal renderer stays here */}
+  <Modal
+    open={openIdx !== null}
+    title={openIdx !== null ? industries[openIdx].name : ""}
+    blurb={openIdx !== null ? industries[openIdx].blurb : ""}
+    bullets={openIdx !== null ? industries[openIdx].details ?? [] : []}
+    onClose={() => setOpenIdx(null)}
+  />
+</section>
+
 
 
       {/* CTA */}
