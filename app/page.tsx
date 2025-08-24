@@ -70,7 +70,7 @@ export default function Page() {
               <a href="#services" className="text-slate-700 hover:text-brand-blue">Services</a>
               <a href="#industries" className="text-slate-700 hover:text-brand-blue">Industries</a>
               <a href="#contact" className="text-slate-700 hover:text-brand-blue">Contact</a>
-              <a href="https://calendar.google.com/" className="rounded-xl border border-brand-blue/30 px-3 py-1.5 text-brand-navy hover:border-brand-blue hover:text-brand-blue">Book a call</a>
+              <a href="https://calendar.app.google/8NwFCXzS6YK8c3WF8" className="rounded-xl border border-brand-blue/30 px-3 py-1.5 text-brand-navy hover:border-brand-blue hover:text-brand-blue">Book a call</a>
             </nav>
           </div>
         </div>
@@ -88,7 +88,7 @@ export default function Page() {
                 Not another BI platform. We design <strong>data foundations</strong>, embed <strong>analytics</strong> into daily tools, and build <strong>AI automations</strong> that remove busywork and unlock growth.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <a href="https://calendar.google.com/" className="inline-flex items-center rounded-xl bg-brand-coral px-4 py-2.5 text-white shadow-card hover:opacity-95">Book a call</a>
+                <a href="https://calendar.app.google/8NwFCXzS6YK8c3WF8" className="inline-flex items-center rounded-xl bg-brand-coral px-4 py-2.5 text-white shadow-card hover:opacity-95">Book a call</a>
                 <a href="#services" className="inline-flex items-center rounded-xl border border-brand-blue/30 px-4 py-2.5 text-brand-navy hover:border-brand-blue hover:text-brand-blue">What we build</a>
               </div>
             </div>
@@ -189,7 +189,7 @@ export default function Page() {
               <textarea rows={3} placeholder="Briefly describe your use case…" className="mt-1 w-full rounded-xl border border-brand-navy/15 px-3 py-2 outline-none focus:border-brand-blue" />
               <div className="mt-4 flex gap-3">
                 <button className="rounded-xl bg-brand-coral px-4 py-2.5 text-white shadow-card hover:opacity-95" type="submit">Send</button>
-                <a href="https://calendar.google.com/" className="rounded-xl border border-brand-blue/30 px-4 py-2.5 text-brand-navy hover:border-brand-blue hover:text-brand-blue">Book a call</a>
+                <a href="https://calendar.app.google/8NwFCXzS6YK8c3WF8" className="rounded-xl border border-brand-blue/30 px-4 py-2.5 text-brand-navy hover:border-brand-blue hover:text-brand-blue">Book a call</a>
               </div>
             </form>
           </div>
