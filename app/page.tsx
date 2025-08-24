@@ -1,7 +1,15 @@
 'use client';
+import * as React from "react";
+import { useEffect } from "react";
+
 
 type Service = { title: string; tag: string; description: string; bullets: string[] };
-type Industry = { name: string; blurb: string };
+type Industry = {
+  name: string;
+  blurb: string;
+  details?: string[]; // NEW: bullets for the modal
+};
+
 type LogoSize = 'sm' | 'md' | 'lg' | 'xl';
 
 const Logo = ({ className = "", size = "xl" }: { className?: string; size?: LogoSize }) => {
@@ -30,13 +38,69 @@ const services: Service[] = [
 ];
 
 const industries: Industry[] = [
-  { name: "Sports academies", blurb: "Player tracking & training capture for 200+ athletes." },
-  { name: "Cannabis (producers & retail)", blurb: "Pricing tools, distribution analytics, and compliance-ready reporting." },
-  { name: "Medical clinics", blurb: "Automated patient-flow dashboards; cut admin time by ~30%." },
-  { name: "Real estate brokerages", blurb: "Agent performance, pipeline visibility, and local market insights." },
-  { name: "Web3 studios", blurb: "On-chain dashboards, cohort analytics, and treasury visibility." },
-  { name: "Gaming & engagement", blurb: "Retention funnels and monetization dashboards (professional tone)." },
+  {
+    name: "Sports academies",
+    blurb:
+      "Helped academies and clubs build online presence and platforms to manage player registration, collect payments & subscriptions, and track player development.",
+    details: [
+      "Player registration & payments portal (subscriptions, teams, age groups).",
+      "Training capture & development tracking with role-based access.",
+      "Lightweight websites and portals for clubs/academies.",
+    ],
+  },
+  {
+    name: "Cannabis (producers & retail)",
+    blurb:
+      "Delivered pricing tools, demand planning support, operational reporting, ERP & seed-to-sale compliance, and distribution analytics to run retail and production with confidence.",
+    details: [
+      "Demand planning & inventory visibility (by SKU, store, region).",
+      "Operational reporting: sales velocity, promo lifts, staffing & labor.",
+      "ERP & seed-to-sale compliance dashboards (batch/lot traceability).",
+      "Distributor & retail analytics (pricing, margin, basket).",
+    ],
+  },
+  {
+    name: "Medical clinics",
+    blurb:
+      "Automated patient-flow dashboards, reduced admin time by ~30%, and supported operators with real-time scheduling and utilization insights.",
+    details: [
+      "Patient flow & wait-time analytics; provider utilization.",
+      "Revenue mix, payer mix, visit types; forecasting.",
+      "Automation of recurring reports & compliance packs.",
+    ],
+  },
+  {
+    name: "Real estate brokerages",
+    blurb:
+      "Built agent performance & market insights dashboards, plus an AI solution that transcribes calls, uploads accurate conversation notes, creates action items, and logs interactions automatically in the CRM.",
+    details: [
+      "Agent & team performance: listings, contracts, close rates, pipeline.",
+      "Market insights: comps, DOM, absorption, price trends.",
+      "AI call transcription → CRM notes, action items & next steps auto-logged.",
+    ],
+  },
+  {
+    name: "Web3 studios",
+    blurb:
+      "Provided data engineering to hook up automated feeds (Transpose and others) and built platforms to commercialize embedded Web3 analytics—treasury, cohort, and on-chain activity dashboards.",
+    details: [
+      "Automated on-chain ETL from Transpose & other sources.",
+      "Treasury, cohort & protocol health dashboards.",
+      "Embeddable analytics products for partners/clients.",
+    ],
+  },
+  {
+    name: "Gaming & engagement",
+    blurb:
+      "Delivered telemetry analytics for WAU/MAU, retention funnels, monetization dashboards, and player engagement reporting across titles and modes.",
+    details: [
+      "Telemetry pipelines, event schemas & QA.",
+      "WAU/MAU/DAU, session metrics, retention cohorts.",
+      "Economy & monetization analytics, A/B test reads.",
+    ],
+  },
 ];
+
 
 const SectionHeader = ({ eyebrow, title, subtitle }: { eyebrow?: string; title: string; subtitle?: string }) => (
   <div className="max-w-3xl">
@@ -56,7 +120,68 @@ const Stat = ({ value, label, icon }: { value: string; label: string; icon: stri
   </div>
 );
 
+function Modal({
+  open,
+  title,
+  blurb,
+  bullets = [],
+  onClose,
+}: {
+  open: boolean;
+  title: string;
+  blurb: string;
+  bullets?: string[];
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${title} details`}
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-2xl rounded-2xl bg-white p-6 shadow-card ring-1 ring-brand-navy/10"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="text-xl font-semibold text-brand-navy">{title}</h3>
+          <button
+            onClick={onClose}
+            className="rounded-lg border border-slate-200 px-2 py-1 text-slate-600 hover:bg-slate-50"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        <p className="mt-2 text-slate-700">{blurb}</p>
+        {bullets.length > 0 && (
+          <ul className="mt-4 space-y-2 text-slate-700">
+            {bullets.map((b) => (
+              <li key={b} className="flex gap-2">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-navy" />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
 export default function Page() {
+  const [openIdx, setOpenIdx] = React.useState<number | null>(null);
   const year = new Date().getFullYear();
 
   return (
@@ -82,8 +207,12 @@ export default function Page() {
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             <div>
               <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-brand-navy">
-                Data. Apps. Automation. <span className="underline decoration-brand-coral underline-offset-8 decoration-4">Done right</span>.
+              Data. Apps. Automation.
+              <span className="block underline decoration-brand-coral underline-offset-8 decoration-4">
+              Done right
+              </span>.
               </h1>
+
               <p className="mt-4 text-lg text-slate-700">
                 Not another BI platform. We design <strong>data foundations</strong>, embed <strong>analytics</strong> into daily tools, and build <strong>AI automations</strong> that remove busywork and unlock growth.
               </p>
@@ -106,19 +235,20 @@ export default function Page() {
         </div>
       </section>
 
-      {/* OUR IMPACT — tightly framed bar (fixes the empty gap) */}
-      <section className="bg-white/70 border-y border-brand-navy/10">
-        <div className="mx-auto max-w-7xl px-4 py-8">
-          <div className="mx-auto max-w-5xl text-center">
-            <h3 className="text-base font-semibold text-brand-navy">Our Impact</h3>
-            <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-3">
-              <Stat icon="⏱" value="10x" label="Faster reporting cycles (weeks → hours)" />
-              <Stat icon="🛡" value="99.9%" label="Pipeline reliability with audits & alerts" />
-              <Stat icon="📈" value="↑ ROI" label="Adoption-first analytics teams actually use" />
-            </div>
-          </div>
-        </div>
-      </section>
+{/* OUR IMPACT — updated with flex layout for wider tiles */}
+<section className="bg-white/70 border-y border-brand-navy/10">
+  <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-5xl text-center">
+      <h3 className="text-base font-semibold text-brand-navy">Our Impact</h3>
+      <div className="mt-6 flex flex-col sm:flex-row gap-6 justify-center">
+        <Stat icon="⏱" value="10x" label="Faster reporting cycles (weeks → hours)" />
+        <Stat icon="🛡" value="99.9%" label="Pipeline reliability with audits & alerts" />
+        <Stat icon="📈" value="↑ ROI" label="Adoption-first analytics teams actually use" />
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Bridging band */}
       <section className="bg-brand-sand/60">
@@ -157,22 +287,33 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Industries */}
-      <section id="industries" className="mx-auto max-w-7xl px-4 py-12 md:py-16">
-        <SectionHeader
-          eyebrow="Industries"
-          title="Industries we’ve delivered in"
-          subtitle="We’ve built platforms, apps, analytics, and automation across these spaces. The shape varies by industry—the goal is constant: faster decisions and measurable impact."
-        />
-        <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {industries.map((i) => (
-            <div key={i.name} className="rounded-2xl border border-brand-navy/15 bg-white p-4 shadow-card">
-              <div className="font-semibold text-brand-navy">{i.name}</div>
-              <div className="mt-1 text-sm text-slate-600">{i.blurb}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+{/* Industries grid — clickable tiles */}
+<div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+  {industries.map((i, idx) => (
+    <button
+      key={i.name}
+      type="button"
+      onClick={() => setOpenIdx(idx)}
+      className="text-left rounded-2xl border border-brand-navy/15 bg-white p-4 shadow-card transition
+                 hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-blue/40"
+      aria-haspopup="dialog"
+      aria-controls="industry-modal"
+    >
+      <div className="font-semibold text-brand-navy">{i.name}</div>
+      <div className="mt-1 text-sm text-slate-600">{i.blurb}</div>
+    </button>
+  ))}
+</div>
+
+{/* Modal renderer — place right below the grid */}
+<Modal
+  open={openIdx !== null}
+  title={openIdx !== null ? industries[openIdx].name : ""}
+  blurb={openIdx !== null ? industries[openIdx].blurb : ""}
+  bullets={openIdx !== null ? industries[openIdx].details ?? [] : []}
+  onClose={() => setOpenIdx(null)}
+/>
+
 
       {/* CTA */}
       <section id="contact" className="mx-auto max-w-7xl px-4 pb-12 md:pb-16">
