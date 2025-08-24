@@ -12,8 +12,8 @@ type Service = {
 };
 
 type Industry = {
-  name: string;      // title
-  blurb: string;     // short description
+  name: string;       // title
+  blurb: string;      // short description
   details?: string[]; // optional bullets shown inline
 };
 
@@ -37,7 +37,7 @@ const Logo = ({ className = "", size = "xl" }: { className?: string; size?: Logo
 };
 
 /* =========================
-   Data: Services (reordered) 
+   Data: Services (ordered)
 ========================= */
 const services: Service[] = [
   {
@@ -247,7 +247,12 @@ export default function Page() {
               <a href="#services" className="text-slate-700 hover:text-brand-blue">Services</a>
               <a href="#industries" className="text-slate-700 hover:text-brand-blue">Industries</a>
               <a href="#contact" className="text-slate-700 hover:text-brand-blue">Contact</a>
-              <a href="https://calendar.app.google/8NwFCXzS6YK8c3WF8" className="rounded-xl border border-brand-blue/30 px-3 py-1.5 text-brand-navy hover:border-brand-blue hover:text-brand-blue">Book a call</a>
+              <a
+                href="https://calendar.app.google/8NwFCXzS6YK8c3WF8"
+                className="rounded-xl border border-brand-blue/30 px-3 py-1.5 text-brand-navy hover:border-brand-blue hover:text-brand-blue"
+              >
+                Book a call
+              </a>
             </nav>
           </div>
         </div>
@@ -269,8 +274,18 @@ export default function Page() {
                 Not another BI platform. We design <strong>data foundations</strong>, embed <strong>analytics</strong> into daily tools, and build <strong>AI automations</strong> that remove busywork and unlock growth.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <a href="https://calendar.app.google/8NwFCXzS6YK8c3WF8" className="inline-flex items-center rounded-xl bg-brand-coral px-4 py-2.5 text-white shadow-card hover:opacity-95">Book a call</a>
-                <a href="#services" className="inline-flex items-center rounded-xl border border-brand-blue/30 px-4 py-2.5 text-brand-navy hover:border-brand-blue hover:text-brand-blue">What we build</a>
+                <a
+                  href="https://calendar.app.google/8NwFCXzS6YK8c3WF8"
+                  className="inline-flex items-center rounded-xl bg-brand-coral px-4 py-2.5 text-white shadow-card hover:opacity-95"
+                >
+                  Book a call
+                </a>
+                <a
+                  href="#services"
+                  className="inline-flex items-center rounded-xl border border-brand-blue/30 px-4 py-2.5 text-brand-navy hover:border-brand-blue hover:text-brand-blue"
+                >
+                  What we build
+                </a>
               </div>
             </div>
 
